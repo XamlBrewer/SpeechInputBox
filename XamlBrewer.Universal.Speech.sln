@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XamlBrewer.Universal.Speech", "XamlBrewer.Universal.Speech", "{67F8B42F-2DD9-49CC-80A8-1A5A5A95640E}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamlBrewer.Universal.Speech.Shared", "XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech.Shared\XamlBrewer.Universal.Speech.Shared.shproj", "{5772A192-90F5-44AA-A52F-83B8FCC55FFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlBrewer.Universal.Speech.WindowsPhone", "XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech.WindowsPhone\XamlBrewer.Universal.Speech.WindowsPhone.csproj", "{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech.Shared\XamlBrewer.Universal.Speech.Shared.projitems*{e487fb9e-8d91-4c54-84bf-ff279efcfd0b}*SharedItemsImports = 4
+		XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech.Shared\XamlBrewer.Universal.Speech.Shared.projitems*{5772a192-90f5-44aa-a52f-83b8fcc55ffd}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|ARM.ActiveCfg = Debug|ARM
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|ARM.Build.0 = Debug|ARM
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|ARM.Deploy.0 = Debug|ARM
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|x86.ActiveCfg = Debug|x86
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|x86.Build.0 = Debug|x86
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Debug|x86.Deploy.0 = Debug|x86
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|ARM.ActiveCfg = Release|ARM
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|ARM.Build.0 = Release|ARM
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|ARM.Deploy.0 = Release|ARM
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|x64.ActiveCfg = Release|Any CPU
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|x86.ActiveCfg = Release|x86
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|x86.Build.0 = Release|x86
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5772A192-90F5-44AA-A52F-83B8FCC55FFD} = {67F8B42F-2DD9-49CC-80A8-1A5A5A95640E}
+		{E487FB9E-8D91-4C54-84BF-FF279EFCFD0B} = {67F8B42F-2DD9-49CC-80A8-1A5A5A95640E}
+	EndGlobalSection
+EndGlobal
