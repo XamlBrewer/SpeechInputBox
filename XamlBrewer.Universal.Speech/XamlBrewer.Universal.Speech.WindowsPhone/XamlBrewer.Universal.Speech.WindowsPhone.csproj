@@ -92,6 +92,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SpeechInputBox.cs" />
+    <Compile Include="Controls\SpeechInputBoxStates.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
