@@ -11,22 +11,28 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <!-- Title -->
         <TextBlock Text="Speech Input Box"
                    Margin="10"
-                   FontSize="32" />
+                   FontSize="32"
+                   Foreground="OrangeRed" />
+
+        <!-- Image -->
+        <Image Grid.Row="1"
+               Stretch="UniformToFill"
+               Source="Assets/blahblahblahblah.jpg" />
 
         <!-- Logo -->
         <Viewbox x:Name="Logo"
                  StretchDirection="DownOnly"
                  Margin="5 0"
                  HorizontalAlignment="Left"
-                 Grid.Row="1">
+                 Grid.Row="2">
 
             <Canvas Height="80"
                     Width="200"
@@ -49,7 +55,7 @@
                 </Canvas>
                 <Grid Width="200"
                       Height="80">
-                    <TextBlock Foreground="DarkOrange"
+                    <TextBlock Foreground="OrangeRed"
                                FontSize="24"
                                FontWeight="SemiBold"
                                HorizontalAlignment="Right"
@@ -65,12 +71,9 @@
             </Canvas>
         </Viewbox>
 
-        <!-- Image -->
-        <Image Grid.Row="2"
-               Stretch="UniformToFill"
-               Source="Assets/blahblahblahblah.jpg" />
-
         <!-- Speech Input Box Control -->
-        <controls:SpeechInputBox Grid.Row="3" />
+        <controls:SpeechInputBox Grid.Row="3"
+                                 Background="White"
+                                 Foreground="Black" />
     </Grid>
 </Page>

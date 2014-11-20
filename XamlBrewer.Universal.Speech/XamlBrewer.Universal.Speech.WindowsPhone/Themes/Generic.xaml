@@ -13,8 +13,8 @@
                         </Grid.RowDefinitions>
                         <MediaElement x:Name="PART_MediaElement"
                                       AutoPlay="True" />
-                        <Grid x:Name="DefaultState"
-                              Background="{Binding Foreground}">
+                        <Grid x:Name="PART_DefaultState"
+                              Background="{TemplateBinding Foreground}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="auto" />
@@ -24,11 +24,11 @@
                                        Margin="12"
                                        VerticalAlignment="Center"
                                        Tapped="TextBlock_Tapped"
-                                       Foreground="{Binding Background}" />
+                                       Foreground="{TemplateBinding Background}" />
                             <Border Grid.Column="1"
-                                    Background="{Binding Background}"
+                                    Background="{TemplateBinding Background}"
                                     BorderThickness="1"
-                                    BorderBrush="{Binding Foreground}"
+                                    BorderBrush="{TemplateBinding Foreground}"
                                     Width="80"
                                     Height="80">
                                 <Button Margin="0"
@@ -36,12 +36,12 @@
                                         BorderThickness="0"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
-                                        Background="{Binding Background}"
+                                        Background="{TemplateBinding Background}"
                                         Click="Microphone_Tapped">
                                     <Viewbox>
                                         <Path Data="M1725.25,2303.97C1729.64,2303.97,1733.2,2300.41,1733.2,2296.02L1733.2,2278.49C1733.2,2274.1 1729.64,2270.54 1725.25,2270.54 1720.86,2270.54 1717.3,2274.1 1717.3,2278.49L1717.3,2296.02C1717.3,2300.41,1720.86,2303.97,1725.25,2303.97z M1742.45,2297.75L1738.72,2297.75C1738.22,2304.75 1732.38,2310.28 1725.25,2310.28 1718.12,2310.28 1712.28,2304.75 1711.78,2297.75L1708.05,2297.75C1708.05,2306.51,1714.61,2313.72,1723.07,2314.79L1723.07,2319.58 1717.2,2319.58 1717.2,2323.87 1733.26,2323.87 1733.26,2319.58 1727.43,2319.58 1727.43,2314.79C1735.9,2313.72,1742.45,2306.51,1742.45,2297.75z"
                                               Stretch="Uniform"
-                                              Fill="{Binding Foreground}"
+                                              Fill="{TemplateBinding Foreground}"
                                               Width="256"
                                               Height="256" />
                                     </Viewbox>
@@ -55,7 +55,7 @@
                             <TextBox x:Name="PART_TextBox"
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="Stretch"
-                                     BorderBrush="{Binding Highlight}"
+                                     BorderBrush="{TemplateBinding Highlight}"
                                      KeyUp="Text_KeyUp"
                                      Padding="12" />
                         </Grid>
@@ -65,27 +65,27 @@
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <Border Grid.ColumnSpan="2"
-                                    Background="{Binding Background}" />
+                                    Background="{TemplateBinding Background}" />
                             <TextBlock Text="Listening ..."
-                                       Foreground="{Binding Highlight}"
+                                       Foreground="{TemplateBinding Highlight}"
                                        FontStyle="Italic"
                                        VerticalAlignment="Center"
                                        Margin="12" />
                             <Border Grid.Column="1"
-                                    Background="{Binding Background}"
+                                    Background="{TemplateBinding Background}"
                                     Width="80"
                                     Height="80">
                                 <Button Margin="0"
                                         Padding="0"
                                         BorderThickness="0"
-                                        Background="{Binding Background}"
+                                        Background="{TemplateBinding Background}"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
                                         Click="Thinking_Tapped">
                                     <Viewbox>
                                         <Path Data="F1M-756.543,-2951.94L-775.412,-2933.06 -775.278,-2932.93 -765.046,-2932.93 -747.577,-2950.4 -742.327,-2955.65 -764.908,-2978.23 -775.412,-2978.23 -756.543,-2959.36 -806.328,-2959.36 -806.328,-2951.94 -756.543,-2951.94z"
                                               Stretch="Uniform"
-                                              Fill="{Binding Highlight}"
+                                              Fill="{TemplateBinding Highlight}"
                                               Width="256"
                                               Height="256"
                                               Margin="0" />
@@ -99,13 +99,13 @@
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <Border Grid.ColumnSpan="2"
-                                    Background="{Binding Background}" />
+                                    Background="{TemplateBinding Background}" />
                             <TextBlock Text="Thinking ..."
-                                       Foreground="{Binding Highlight}"
+                                       Foreground="{TemplateBinding Highlight}"
                                        VerticalAlignment="Center"
                                        Margin="12" />
                             <Border Grid.Column="1"
-                                    Background="{Binding Background}"
+                                    Background="{TemplateBinding Background}"
                                     Width="80"
                                     Height="80">
                                 <Button Margin="0"
@@ -118,7 +118,7 @@
                                     <Viewbox Margin="0 ">
                                         <Path Data="F1M-198.67,4280.19C-197.609,4277.78 -197.035,4275.17 -197.035,4272.46 -197.035,4267.33 -199.032,4262.51 -202.665,4258.88 -206.286,4255.25 -211.107,4253.26 -216.235,4253.26 -221.365,4253.26 -226.186,4255.25 -229.811,4258.88 -232.498,4261.57 -234.282,4264.92 -235.032,4268.56L-225.835,4278.86 -252.503,4278.86 -250.373,4251.38 -241.577,4261.22C-240.214,4258.14 -238.303,4255.3 -235.844,4252.85 -230.61,4247.61 -223.644,4244.72 -216.235,4244.72 -208.822,4244.72 -201.861,4247.61 -196.627,4252.85 -191.39,4258.08 -188.503,4265.05 -188.503,4272.46 -188.503,4275.11 -188.894,4277.71 -189.617,4280.19L-198.67,4280.19z"
                                               Stretch="Uniform"
-                                              Fill="{Binding Highlight}"
+                                              Fill="{TemplateBinding Highlight}"
                                               Width="256"
                                               Height="256"
                                               Margin="0" />

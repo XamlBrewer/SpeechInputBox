@@ -15,17 +15,51 @@
     using Windows.UI.Xaml.Input;
     using Windows.UI.Xaml.Media;
 
+    [TemplatePart(Name = MediaElementPartName, Type = typeof(MediaElement))]
+    [TemplatePart(Name = DefaultStatePartName, Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = TextBlockPartName, Type = typeof(TextBlock))]
+    [TemplatePart(Name = TextStatePartName, Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = TextBoxPartName, Type = typeof(TextBox))]
+    [TemplatePart(Name = ListeningStatePartName, Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = ThinkingStatePartName, Type = typeof(FrameworkElement))]
     public sealed class SpeechInputBox : Control
     {
-        public SpeechInputBox()
-        {
-            this.DefaultStyleKey = typeof(SpeechInputBox);
-            this.Highlight = new SolidColorBrush(Colors.Red);
-            this.SetState(SpeechInputBoxStates.Default);
-        }
+        #region Constants
+
+        private const string MediaElementPartName = "PART_MediaElement";
+        private const string DefaultStatePartName = "PART_DefaultState";
+        private const string TextBlockPartName = "PART_TextBlock";
+        private const string TextStatePartName = "PART_TextState";
+        private const string TextBoxPartName = "PART_TextBox";
+        private const string ListeningStatePartName = "PART_ListeningState";
+        private const string ThinkingStatePartName = "PART_ThinkingState";
+
+        #endregion
+
+        #region Fields
+
+        private MediaElement mediaElement;
+        private FrameworkElement defaultState;
+        private TextBlock textBlock;
+        private FrameworkElement textState;
+        private TextBox textBox;
+        private FrameworkElement listeningState;
+        private FrameworkElement thinkingState;
 
         private SpeechInputBoxStates state = SpeechInputBoxStates.Default;
         private List<ISpeechRecognitionConstraint> constraints = new List<ISpeechRecognitionConstraint>() { new SpeechRecognitionTopicConstraint(SpeechRecognitionScenario.Dictation, "Development") };
+
+        #endregion
+
+        #region Constructors
+        public SpeechInputBox()
+        {
+            this.DefaultStyleKey = typeof(SpeechInputBox);
+        }
+
+        #endregion
+
+        #region Dependency Property Registrations
 
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("TextProperty", typeof(string), typeof(SpeechInputBox), new PropertyMetadata(string.Empty, OnTextChanged));
@@ -33,7 +67,18 @@
         public static readonly DependencyProperty QuestionProperty =
             DependencyProperty.Register("Question", typeof(string), typeof(SpeechInputBox), new PropertyMetadata("Ask me anything...", OnQuestionChanged));
 
+        public static readonly DependencyProperty HighlightProperty =
+            DependencyProperty.Register("Highlight", typeof(Brush), typeof(SpeechInputBox), new PropertyMetadata(new SolidColorBrush(Colors.OrangeRed)));
+
+        #endregion
+
+        #region Events
+
         public event EventHandler TextChanged;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Gets the text.
@@ -59,7 +104,105 @@
         /// <summary>
         /// Gets or sets the highlight brush.
         /// </summary>
-        public Brush Highlight { get; set; }
+        public Brush Highlight        
+        {
+            get { return (Brush)GetValue(HighlightProperty); }
+            set { SetValue(HighlightProperty, value); }
+        }
+
+        private MediaElement MediaElement
+        {
+            get
+            {
+                if (this.mediaElement == null)
+                {
+                    this.mediaElement = this.GetTemplateChild(MediaElementPartName) as MediaElement;
+                }
+                return this.mediaElement;
+            }
+        }
+
+        private FrameworkElement DefaultState
+        {
+            get
+            {
+                if (this.defaultState == null)
+                {
+                    this.defaultState = this.GetTemplateChild(DefaultStatePartName) as FrameworkElement;
+                }
+                return this.defaultState;
+            }
+        }
+
+        private FrameworkElement TextState
+        {
+            get
+            {
+                if (this.textState == null)
+                {
+                    this.textState = this.GetTemplateChild(TextStatePartName) as FrameworkElement;
+                }
+                return this.textState;
+            }
+        }
+
+        private FrameworkElement ListeningState
+        {
+            get
+            {
+                if (this.listeningState == null)
+                {
+                    this.listeningState = this.GetTemplateChild(ListeningStatePartName) as FrameworkElement;
+                }
+                return this.listeningState;
+            }
+        }
+
+        private FrameworkElement ThinkingState
+        {
+            get
+            {
+                if (this.thinkingState == null)
+                {
+                    this.thinkingState = this.GetTemplateChild(ThinkingStatePartName) as FrameworkElement;
+                }
+                return this.thinkingState;
+            }
+        }
+
+        private TextBlock TextBlock
+        {
+            get
+            {
+                if (this.textBlock == null)
+                {
+                    this.textBlock = this.GetTemplateChild(TextBlockPartName) as TextBlock;
+                }
+                return this.textBlock;
+            }
+        }
+
+        private TextBox TextBox
+        {
+            get
+            {
+                if (this.textBox == null)
+                {
+                    this.textBox = this.GetTemplateChild(TextBoxPartName) as TextBox;
+                }
+                return this.textBox;
+            }
+        }
+
+        #endregion
+
+        protected override async void OnApplyTemplate()
+        {
+            this.Highlight = new SolidColorBrush(Colors.Red);
+            await this.SetState(SpeechInputBoxStates.Default);
+            //var scale = this.GetTemplateChild(ScalePartName) as Path;
+            base.OnApplyTemplate();
+        }
 
         /// <summary>
         /// Starts ... listening.
