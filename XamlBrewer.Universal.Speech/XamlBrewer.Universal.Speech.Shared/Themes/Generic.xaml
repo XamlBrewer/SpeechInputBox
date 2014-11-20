@@ -28,7 +28,7 @@
                             <Border Grid.Column="1"
                                     Background="{TemplateBinding Background}"
                                     BorderThickness="1"
-                                    BorderBrush="{TemplateBinding Foreground}"
+                                    BorderBrush="{TemplateBinding Highlight}"
                                     Width="80"
                                     Height="80">
                                 <Button Margin="0"

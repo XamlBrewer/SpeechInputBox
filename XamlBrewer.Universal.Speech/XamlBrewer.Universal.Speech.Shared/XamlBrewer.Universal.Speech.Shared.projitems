@@ -15,4 +15,17 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>XamlBrewer.Universal.Speech</Import_RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechInputBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechInputBoxStates.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Assets\" />
+  </ItemGroup>
 </Project>
