@@ -20,8 +20,11 @@
     [TemplatePart(Name = TextBlockPartName, Type = typeof(TextBlock))]
     [TemplatePart(Name = TextStatePartName, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = TextBoxPartName, Type = typeof(TextBox))]
+    [TemplatePart(Name = MicrophoneButtonPartName, Type = typeof(Button))]
     [TemplatePart(Name = ListeningStatePartName, Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = ListeningButtonPartName, Type = typeof(Button))]
     [TemplatePart(Name = ThinkingStatePartName, Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = ThinkingButtonPartName, Type = typeof(Button))]
     public sealed class SpeechInputBox : Control
     {
         #region Constants
@@ -31,8 +34,11 @@
         private const string TextBlockPartName = "PART_TextBlock";
         private const string TextStatePartName = "PART_TextState";
         private const string TextBoxPartName = "PART_TextBox";
+        private const string MicrophoneButtonPartName = "PART_MicrophoneButton";
         private const string ListeningStatePartName = "PART_ListeningState";
+        private const string ListeningButtonPartName = "PART_ListeningButton";
         private const string ThinkingStatePartName = "PART_ThinkingState";
+        private const string ThinkingButtonPartName = "PART_ThinkingButton";
 
         #endregion
 
@@ -43,8 +49,11 @@
         private TextBlock textBlock;
         private FrameworkElement textState;
         private TextBox textBox;
+        private Button microphoneButton;
         private FrameworkElement listeningState;
+        private Button listeningButton;
         private FrameworkElement thinkingState;
+        private Button thinkingButton;
 
         private SpeechInputBoxStates state = SpeechInputBoxStates.Default;
         private List<ISpeechRecognitionConstraint> constraints = new List<ISpeechRecognitionConstraint>() { new SpeechRecognitionTopicConstraint(SpeechRecognitionScenario.Dictation, "Development") };
@@ -104,7 +113,7 @@
         /// <summary>
         /// Gets or sets the highlight brush.
         /// </summary>
-        public Brush Highlight        
+        public Brush Highlight
         {
             get { return (Brush)GetValue(HighlightProperty); }
             set { SetValue(HighlightProperty, value); }
@@ -194,13 +203,56 @@
             }
         }
 
+        private Button MicrophoneButton
+        {
+            get
+            {
+                if (this.microphoneButton == null)
+                {
+                    this.microphoneButton = this.GetTemplateChild(MicrophoneButtonPartName) as Button;
+                }
+                return this.microphoneButton;
+            }
+        }
+
+        private Button ListeningButton
+        {
+            get
+            {
+                if (this.listeningButton == null)
+                {
+                    this.listeningButton = this.GetTemplateChild(ListeningButtonPartName) as Button;
+                }
+                return this.listeningButton;
+            }
+        }
+
+        private Button ThinkingButton
+        {
+            get
+            {
+                if (this.thinkingButton == null)
+                {
+                    this.thinkingButton = this.GetTemplateChild(ThinkingButtonPartName) as Button;
+                }
+                return this.thinkingButton;
+            }
+        }
+
         #endregion
 
         protected override async void OnApplyTemplate()
         {
             this.Highlight = new SolidColorBrush(Colors.Red);
+
+            this.TextBlock.Tapped += this.TextBlock_Tapped;
+            this.TextBlock.KeyUp += this.TextBlock_KeyUp;
+            this.MicrophoneButton.Click += this.Microphone_Tapped;
+            this.ListeningButton.Click += this.Thinking_Tapped;
+            this.ThinkingButton.Click += this.Thinking_Tapped;
+
             await this.SetState(SpeechInputBoxStates.Default);
-            //var scale = this.GetTemplateChild(ScalePartName) as Path;
+
             base.OnApplyTemplate();
         }
 
@@ -248,7 +300,7 @@
         /// <summary>
         /// Stop input when user hits enter key.
         /// </summary>
-        private async void Text_KeyUp(object sender, KeyRoutedEventArgs e)
+        private async void TextBlock_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Accept || e.Key == VirtualKey.Enter)
             {
