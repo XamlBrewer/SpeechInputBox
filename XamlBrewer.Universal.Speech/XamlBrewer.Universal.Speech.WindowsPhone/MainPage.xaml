@@ -74,6 +74,8 @@
         <!-- Speech Input Box Control -->
         <controls:SpeechInputBox Grid.Row="3"
                                  Background="White"
-                                 Foreground="Black" />
+                                 Foreground="Black"
+                                 ButtonBackground="DimGray"
+                                 Highlight="DarkOrange" />
     </Grid>
 </Page>

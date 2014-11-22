@@ -76,6 +76,9 @@
         public static readonly DependencyProperty QuestionProperty =
             DependencyProperty.Register("Question", typeof(string), typeof(SpeechInputBox), new PropertyMetadata("Ask me anything...", OnQuestionChanged));
 
+        public static readonly DependencyProperty ButtonBackgroundProperty =
+            DependencyProperty.Register("ButtonBackground", typeof(Brush), typeof(SpeechInputBox), new PropertyMetadata(new SolidColorBrush(Colors.DimGray)));
+
         public static readonly DependencyProperty HighlightProperty =
             DependencyProperty.Register("Highlight", typeof(Brush), typeof(SpeechInputBox), new PropertyMetadata(new SolidColorBrush(Colors.OrangeRed)));
 
@@ -108,6 +111,15 @@
         {
             get { return (string)GetValue(QuestionProperty); }
             set { SetValue(QuestionProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the button background brush.
+        /// </summary>
+        public Brush ButtonBackground
+        {
+            get { return (Brush)GetValue(ButtonBackgroundProperty); }
+            set { SetValue(ButtonBackgroundProperty, value); }
         }
 
         /// <summary>

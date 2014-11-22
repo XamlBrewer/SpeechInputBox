@@ -12,7 +12,7 @@
                         </Grid.RowDefinitions>
                         <MediaElement Name="PART_MediaElement"
                                       AutoPlay="True" />
-                        <Grid x:Name="PART_DefaultState"
+                        <Grid Name="PART_DefaultState"
                               Background="{TemplateBinding Background}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -25,7 +25,7 @@
                                        VerticalAlignment="Center"
                                        Foreground="{TemplateBinding Foreground}" />
                             <Border Grid.Column="1"
-                                    Background="{TemplateBinding Foreground}"
+                                    Background="{TemplateBinding ButtonBackground}"
                                     BorderThickness="1"
                                     BorderBrush="{TemplateBinding Background}"
                                     Width="64"
@@ -36,7 +36,7 @@
                                         BorderThickness="0"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center"
-                                        Background="{TemplateBinding Foreground}">
+                                        Background="{TemplateBinding ButtonBackground}">
                                     <Viewbox>
                                         <Path Data="M1725.25,2303.97C1729.64,2303.97,1733.2,2300.41,1733.2,2296.02L1733.2,2278.49C1733.2,2274.1 1729.64,2270.54 1725.25,2270.54 1720.86,2270.54 1717.3,2274.1 1717.3,2278.49L1717.3,2296.02C1717.3,2300.41,1720.86,2303.97,1725.25,2303.97z M1742.45,2297.75L1738.72,2297.75C1738.22,2304.75 1732.38,2310.28 1725.25,2310.28 1718.12,2310.28 1712.28,2304.75 1711.78,2297.75L1708.05,2297.75C1708.05,2306.51,1714.61,2313.72,1723.07,2314.79L1723.07,2319.58 1717.2,2319.58 1717.2,2323.87 1733.26,2323.87 1733.26,2319.58 1727.43,2319.58 1727.43,2314.79C1735.9,2313.72,1742.45,2306.51,1742.45,2297.75z"
                                               Stretch="Uniform"
@@ -64,7 +64,7 @@
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <Border Grid.ColumnSpan="2"
-                                    Background="{TemplateBinding Background}" />
+                                    Background="{TemplateBinding Foreground}" />
                             <TextBlock Text="Listening ..."
                                        Foreground="{TemplateBinding Highlight}"
                                        FontStyle="Italic"
@@ -72,14 +72,14 @@
                                        Margin="12"
                                        FontSize="18" />
                             <Border Grid.Column="1"
-                                    Background="{TemplateBinding Background}"
+                                    Background="{TemplateBinding Foreground}"
                                     Width="64"
                                     Height="64">
                                 <Button x:Name="PART_ListeningButton"
                                         Margin="0"
                                         Padding="0"
                                         BorderThickness="0"
-                                        Background="{TemplateBinding Background}"
+                                        Background="{TemplateBinding Foreground}"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Center">
                                     <Viewbox>
@@ -99,14 +99,14 @@
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <Border Grid.ColumnSpan="2"
-                                    Background="{TemplateBinding Background}" />
+                                    Background="{TemplateBinding Foreground}" />
                             <TextBlock Text="Thinking ..."
                                        Foreground="{TemplateBinding Highlight}"
                                        VerticalAlignment="Center"
                                        Margin="12"
                                        FontSize="18" />
                             <Border Grid.Column="1"
-                                    Background="{TemplateBinding Background}"
+                                    Background="{TemplateBinding Foreground}"
                                     Width="64"
                                     Height="64">
                                 <Button x:Name="PART_ThinkingButton"

@@ -26,6 +26,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechInputBoxStates.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Assets\" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\Listening.wav" />
   </ItemGroup>
 </Project>
