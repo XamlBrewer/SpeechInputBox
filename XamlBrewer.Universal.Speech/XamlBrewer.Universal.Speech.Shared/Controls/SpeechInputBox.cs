@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Threading.Tasks;
+    using Windows.ApplicationModel.Resources;
     using Windows.Foundation;
     using Windows.Media.SpeechRecognition;
     using Windows.Media.SpeechSynthesis;
@@ -14,6 +15,8 @@
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Input;
     using Windows.UI.Xaml.Media;
+
+    // Resource mgt: http://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh965326.aspx
 
     [TemplatePart(Name = MediaElementPartName, Type = typeof(MediaElement))]
     [TemplatePart(Name = DefaultStatePartName, Type = typeof(FrameworkElement))]
@@ -413,7 +416,11 @@
                 else
                 {
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
-                      () => { this.Text = "Sorry, I did not understand that."; }));
+                      () =>
+                      {
+                          var loader = new ResourceLoader();
+                          this.Text = loader.GetString("NotUnderstood");
+                      }));
                     await this.SetState(SpeechInputBoxStates.Default);
                 }
             }
@@ -426,7 +433,11 @@
             if (hadException)
             {
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
-                   () => { this.Text = "Sorry, I did not understand that."; }));
+                   () =>
+                   {
+                       var loader = new ResourceLoader();
+                       this.Text = loader.GetString("NotUnderstood");
+                   }));
                 await this.SetState(SpeechInputBoxStates.Default);
             }
         }

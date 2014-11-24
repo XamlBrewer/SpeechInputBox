@@ -19,9 +19,10 @@
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock Name="PART_TextBlock"
-                                       Text="Ask me anything"
+                                       x:Uid="PART_TextBlock"
+                                       Text="[Ask me anything]"
                                        Margin="12"
-                                       FontSize="18"
+                                       FontSize="24"
                                        VerticalAlignment="Center"
                                        Foreground="{TemplateBinding Foreground}" />
                             <Border Grid.Column="1"
@@ -65,7 +66,8 @@
                             </Grid.ColumnDefinitions>
                             <Border Grid.ColumnSpan="2"
                                     Background="{TemplateBinding Foreground}" />
-                            <TextBlock Text="Listening ..."
+                            <TextBlock x:Uid="Listening"
+                                       Text="[Listening ...]"
                                        Foreground="{TemplateBinding Highlight}"
                                        FontStyle="Italic"
                                        VerticalAlignment="Center"
@@ -100,7 +102,8 @@
                             </Grid.ColumnDefinitions>
                             <Border Grid.ColumnSpan="2"
                                     Background="{TemplateBinding Foreground}" />
-                            <TextBlock Text="Thinking ..."
+                            <TextBlock x:Uid="Thinking"
+                                       Text="[Thinking ...]"
                                        Foreground="{TemplateBinding Highlight}"
                                        VerticalAlignment="Center"
                                        Margin="12"

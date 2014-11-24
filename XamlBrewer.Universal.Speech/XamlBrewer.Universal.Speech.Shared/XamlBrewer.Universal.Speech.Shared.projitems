@@ -28,4 +28,7 @@
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\Listening.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
+  </ItemGroup>
 </Project>
