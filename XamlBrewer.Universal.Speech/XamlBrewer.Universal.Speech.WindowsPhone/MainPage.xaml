@@ -78,4 +78,14 @@
                                  ButtonBackground="DimGray"
                                  Highlight="DarkOrange" />
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Contact"
+                          Label="Voice"
+                          Click="VoiceButton_Click"/>
+            <AppBarButton Icon="Setting"
+                          Label="Constraints"
+                          Click="ConstraintsButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

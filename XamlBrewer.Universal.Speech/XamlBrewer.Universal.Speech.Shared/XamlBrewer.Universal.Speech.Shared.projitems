@@ -23,7 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechInputBox.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechInputBoxStates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechInputBoxEnumerations.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\Cancelled.wav" />

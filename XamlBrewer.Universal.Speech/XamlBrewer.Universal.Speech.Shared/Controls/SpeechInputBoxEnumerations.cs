@@ -3,7 +3,7 @@
     /// <summary>
     /// SpeechInputBox control states.
     /// </summary>
-    public enum SpeechInputBoxStates
+    public enum SpeechInputBoxState
     {
         Default,
         Text,

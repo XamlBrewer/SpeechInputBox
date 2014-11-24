@@ -58,7 +58,7 @@
         private FrameworkElement thinkingState;
         private Button thinkingButton;
 
-        private SpeechInputBoxStates state = SpeechInputBoxStates.Default;
+        private SpeechInputBoxState state = SpeechInputBoxState.Default;
         private List<ISpeechRecognitionConstraint> constraints = new List<ISpeechRecognitionConstraint>() { new SpeechRecognitionTopicConstraint(SpeechRecognitionScenario.Dictation, "Development") };
 
         #endregion
@@ -84,6 +84,9 @@
 
         public static readonly DependencyProperty HighlightProperty =
             DependencyProperty.Register("Highlight", typeof(Brush), typeof(SpeechInputBox), new PropertyMetadata(new SolidColorBrush(Colors.OrangeRed)));
+
+        public static readonly DependencyProperty VoiceGenderProperty =
+            DependencyProperty.Register("VoiceGender", typeof(VoiceGender), typeof(SpeechInputBox), new PropertyMetadata(VoiceGender.Female));
 
         #endregion
 
@@ -132,6 +135,15 @@
         {
             get { return (Brush)GetValue(HighlightProperty); }
             set { SetValue(HighlightProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the voice gender.
+        /// </summary>
+        public VoiceGender VoiceGender
+        {
+            get { return (VoiceGender)GetValue(VoiceGenderProperty); }
+            set { SetValue(VoiceGenderProperty, value); }
         }
 
         private MediaElement MediaElement
@@ -266,7 +278,7 @@
             this.ListeningButton.Click += this.Listening_Tapped;
             this.ThinkingButton.Click += this.Thinking_Tapped;
 
-            await this.SetState(SpeechInputBoxStates.Default);
+            await this.SetState(SpeechInputBoxState.Default);
 
             base.OnApplyTemplate();
         }
@@ -278,7 +290,7 @@
         {
             Dispatcher.RunAsync(
                 Windows.UI.Core.CoreDispatcherPriority.Normal,
-                new DispatchedHandler(async () => await this.SetState(SpeechInputBoxStates.Listening)));
+                new DispatchedHandler(async () => await this.SetState(SpeechInputBoxState.Listening)));
         }
 
         private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -309,7 +321,7 @@
         /// </summary>
         private async void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            await this.SetState(SpeechInputBoxStates.Text);
+            await this.SetState(SpeechInputBoxState.Text);
         }
 
         /// <summary>
@@ -320,7 +332,7 @@
             if (e.Key == VirtualKey.Accept || e.Key == VirtualKey.Enter)
             {
                 this.Text = this.TextBox.Text;
-                await this.SetState(SpeechInputBoxStates.Default);
+                await this.SetState(SpeechInputBoxState.Default);
             }
         }
 
@@ -329,7 +341,7 @@
         /// </summary>
         private async void Microphone_Tapped(object sender, RoutedEventArgs e)
         {
-            await this.SetState(SpeechInputBoxStates.Listening);
+            await this.SetState(SpeechInputBoxState.Listening);
         }
 
         /// <summary>
@@ -337,8 +349,7 @@
         /// </summary>
         private async void Listening_Tapped(object sender, RoutedEventArgs e)
         {
-            await this.SetState(SpeechInputBoxStates.Thinking);
-
+            await this.SetState(SpeechInputBoxState.Thinking);
         }
 
         /// <summary>
@@ -349,14 +360,13 @@
             this.MediaElement.Source = new Uri("ms-appx:///Assets//Cancelled.wav");
             var loader = new ResourceLoader();
             this.Text = loader.GetString("Cancelled");
-            await this.SetState(SpeechInputBoxStates.Default);
-
+            await this.SetState(SpeechInputBoxState.Default);
         }
 
         /// <summary>
         /// Move to a new state.
         /// </summary>
-        private async Task SetState(SpeechInputBoxStates state)
+        private async Task SetState(SpeechInputBoxState state)
         {
             this.state = state;
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
@@ -370,13 +380,13 @@
 
                    switch (this.state)
                    {
-                       case SpeechInputBoxStates.Default:
+                       case SpeechInputBoxState.Default:
                            this.DefaultState.Visibility = Visibility.Visible;
                            break;
-                       case SpeechInputBoxStates.Text:
+                       case SpeechInputBoxState.Text:
                            this.TextState.Visibility = Visibility.Visible;
                            break;
-                       case SpeechInputBoxStates.Listening:
+                       case SpeechInputBoxState.Listening:
                            this.ListeningState.Visibility = Visibility.Visible;
                            this.MediaElement.Source = new Uri("ms-appx:///Assets//Listening.wav");
                            SpeechRecognizer recognizer = new SpeechRecognizer();
@@ -391,7 +401,7 @@
                            var reco = recognizer.RecognizeAsync();
                            reco.Completed += this.SpeechRecognition_Completed;
                            break;
-                       case SpeechInputBoxStates.Thinking:
+                       case SpeechInputBoxState.Thinking:
                            this.ThinkingState.Visibility = Visibility.Visible;
                            break;
                        default:
@@ -405,7 +415,7 @@
         /// </summary>
         private async void SpeechRecognition_Completed(IAsyncOperation<SpeechRecognitionResult> asyncInfo, AsyncStatus asyncStatus)
         {
-            await this.SetState(SpeechInputBoxStates.Thinking);
+            await this.SetState(SpeechInputBoxState.Thinking);
 
             var hadException = false;
 
@@ -416,6 +426,7 @@
                 if (results.Confidence != SpeechRecognitionConfidence.Rejected)
                 {
                     var synthesizer = new SpeechSynthesizer();
+                    synthesizer.Voice = this.FindVoice();
                     var stream = synthesizer.SynthesizeTextToStreamAsync(results.Text);
 
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
@@ -434,7 +445,7 @@
                           var loader = new ResourceLoader();
                           this.Text = loader.GetString("NotUnderstood");
                       }));
-                    await this.SetState(SpeechInputBoxStates.Default);
+                    await this.SetState(SpeechInputBoxState.Default);
                 }
             }
             catch (Exception ex)
@@ -452,8 +463,26 @@
                        var loader = new ResourceLoader();
                        this.Text = loader.GetString("NotUnderstood");
                    }));
-                await this.SetState(SpeechInputBoxStates.Default);
+                await this.SetState(SpeechInputBoxState.Default);
             }
+        }
+
+        private VoiceInformation FindVoice()
+        {
+            var voices = SpeechSynthesizer.AllVoices;
+            foreach (var voice in voices)
+            {
+                if (voice.Gender == this.VoiceGender)
+                {
+                    if (voice.Language == "")
+                    {
+                        return voice;
+                    }
+                }
+            }
+
+            // Nothing appropriate found.
+            return voices[0];
         }
 
         /// <summary>
@@ -461,7 +490,7 @@
         /// </summary>
         private async void SpeechSynthesis_Completed(IAsyncOperation<SpeechSynthesisStream> asyncInfo, AsyncStatus asyncStatus)
         {
-            await this.SetState(SpeechInputBoxStates.Default);
+            await this.SetState(SpeechInputBoxState.Default);
 
             var results = asyncInfo.GetResults();
 

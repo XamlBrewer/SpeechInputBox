@@ -44,5 +44,15 @@ namespace XamlBrewer.Universal.Speech
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
         }
+
+        private void VoiceButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ConstraintsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
