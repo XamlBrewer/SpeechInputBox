@@ -263,7 +263,7 @@
             this.TextBlock.Tapped += this.TextBlock_Tapped;
             this.TextBlock.KeyUp += this.TextBlock_KeyUp;
             this.MicrophoneButton.Click += this.Microphone_Tapped;
-            this.ListeningButton.Click += this.Thinking_Tapped;
+            this.ListeningButton.Click += this.Listening_Tapped;
             this.ThinkingButton.Click += this.Thinking_Tapped;
 
             await this.SetState(SpeechInputBoxStates.Default);
@@ -335,9 +335,21 @@
         /// <summary>
         /// Start thinking.
         /// </summary>
-        private async void Thinking_Tapped(object sender, RoutedEventArgs e)
+        private async void Listening_Tapped(object sender, RoutedEventArgs e)
         {
             await this.SetState(SpeechInputBoxStates.Thinking);
+
+        }
+
+        /// <summary>
+        /// Cancel thinking.
+        /// </summary>
+        private async void Thinking_Tapped(object sender, RoutedEventArgs e)
+        {
+            this.MediaElement.Source = new Uri("ms-appx:///Assets//Cancelled.wav");
+            var loader = new ResourceLoader();
+            this.Text = loader.GetString("Cancelled");
+            await this.SetState(SpeechInputBoxStates.Default);
 
         }
 
@@ -418,6 +430,7 @@
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
                       () =>
                       {
+                          this.MediaElement.Source = new Uri("ms-appx:///Assets//Cancelled.wav");
                           var loader = new ResourceLoader();
                           this.Text = loader.GetString("NotUnderstood");
                       }));
@@ -435,6 +448,7 @@
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
                    () =>
                    {
+                       this.MediaElement.Source = new Uri("ms-appx:///Assets//Cancelled.wav");
                        var loader = new ResourceLoader();
                        this.Text = loader.GetString("NotUnderstood");
                    }));
