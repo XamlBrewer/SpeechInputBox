@@ -72,7 +72,8 @@
         </Viewbox>
 
         <!-- Speech Input Box Control -->
-        <controls:SpeechInputBox Grid.Row="3"
+        <controls:SpeechInputBox x:Name="SpeechInputBox"
+                                 Grid.Row="3"
                                  Background="White"
                                  Foreground="Black"
                                  ButtonBackground="DimGray"
@@ -82,10 +83,10 @@
         <CommandBar>
             <AppBarButton Icon="Contact"
                           Label="Voice"
-                          Click="VoiceButton_Click"/>
+                          Click="VoiceButton_Click" />
             <AppBarButton Icon="Setting"
                           Label="Constraints"
-                          Click="ConstraintsButton_Click"/>
+                          Click="ConstraintsButton_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 </Page>

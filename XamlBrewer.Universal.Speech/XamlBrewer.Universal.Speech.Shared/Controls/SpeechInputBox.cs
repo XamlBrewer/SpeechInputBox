@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Globalization;
+    using System.Linq;
     using System.Threading.Tasks;
     using Windows.ApplicationModel.Resources;
     using Windows.Foundation;
@@ -154,6 +156,7 @@
                 {
                     this.mediaElement = this.GetTemplateChild(MediaElementPartName) as MediaElement;
                 }
+
                 return this.mediaElement;
             }
         }
@@ -166,6 +169,7 @@
                 {
                     this.defaultState = this.GetTemplateChild(DefaultStatePartName) as FrameworkElement;
                 }
+
                 return this.defaultState;
             }
         }
@@ -178,6 +182,7 @@
                 {
                     this.textState = this.GetTemplateChild(TextStatePartName) as FrameworkElement;
                 }
+
                 return this.textState;
             }
         }
@@ -190,6 +195,7 @@
                 {
                     this.listeningState = this.GetTemplateChild(ListeningStatePartName) as FrameworkElement;
                 }
+
                 return this.listeningState;
             }
         }
@@ -202,6 +208,7 @@
                 {
                     this.thinkingState = this.GetTemplateChild(ThinkingStatePartName) as FrameworkElement;
                 }
+
                 return this.thinkingState;
             }
         }
@@ -214,6 +221,7 @@
                 {
                     this.textBlock = this.GetTemplateChild(TextBlockPartName) as TextBlock;
                 }
+
                 return this.textBlock;
             }
         }
@@ -226,6 +234,7 @@
                 {
                     this.textBox = this.GetTemplateChild(TextBoxPartName) as TextBox;
                 }
+
                 return this.textBox;
             }
         }
@@ -238,6 +247,7 @@
                 {
                     this.microphoneButton = this.GetTemplateChild(MicrophoneButtonPartName) as Button;
                 }
+
                 return this.microphoneButton;
             }
         }
@@ -250,6 +260,7 @@
                 {
                     this.listeningButton = this.GetTemplateChild(ListeningButtonPartName) as Button;
                 }
+
                 return this.listeningButton;
             }
         }
@@ -426,7 +437,9 @@
                 if (results.Confidence != SpeechRecognitionConfidence.Rejected)
                 {
                     var synthesizer = new SpeechSynthesizer();
-                    synthesizer.Voice = this.FindVoice();
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
+                      () => { synthesizer.Voice = this.FindVoice(); }));
+
                     var stream = synthesizer.SynthesizeTextToStreamAsync(results.Text);
 
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
@@ -472,9 +485,12 @@
             var voices = SpeechSynthesizer.AllVoices;
             foreach (var voice in voices)
             {
+                // Temp
+                Debug.WriteLine("{0}/{1}", voice.Language, CultureInfo.CurrentUICulture.Name);
+
                 if (voice.Gender == this.VoiceGender)
                 {
-                    if (voice.Language == "")
+                    if (voice.Language == CultureInfo.CurrentUICulture.Name)
                     {
                         return voice;
                     }
@@ -482,7 +498,7 @@
             }
 
             // Nothing appropriate found.
-            return voices[0];
+            return voices.First();
         }
 
         /// <summary>
