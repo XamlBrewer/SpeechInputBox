@@ -284,7 +284,8 @@
             this.Highlight = new SolidColorBrush(Colors.Red);
 
             this.TextBlock.Tapped += this.TextBlock_Tapped;
-            this.TextBlock.KeyUp += this.TextBlock_KeyUp;
+            this.TextBox.KeyUp += this.TextBox_KeyUp;
+            this.TextBox.LostFocus += this.TextBox_LostFocus;
             this.MicrophoneButton.Click += this.Microphone_Tapped;
             this.ListeningButton.Click += this.Listening_Tapped;
             this.ThinkingButton.Click += this.Thinking_Tapped;
@@ -338,13 +339,19 @@
         /// <summary>
         /// Stop input when user hits enter key.
         /// </summary>
-        private async void TextBlock_KeyUp(object sender, KeyRoutedEventArgs e)
+        private async void TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Accept || e.Key == VirtualKey.Enter)
             {
                 this.Text = this.TextBox.Text;
                 await this.SetState(SpeechInputBoxState.Default);
             }
+        }
+
+        private async void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.Text = this.TextBox.Text;
+            await this.SetState(SpeechInputBoxState.Default);
         }
 
         /// <summary>
