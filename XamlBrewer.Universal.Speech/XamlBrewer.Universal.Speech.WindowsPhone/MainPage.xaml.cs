@@ -30,21 +30,38 @@ namespace XamlBrewer.Universal.Speech
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
-        private void VoiceButton_Click(object sender, RoutedEventArgs e)
+        private async void VoiceButton_Click(object sender, RoutedEventArgs e)
         {
+            var currentText = this.SpeechInputBox.Text;
+
             if (this.SpeechInputBox.VoiceGender == VoiceGender.Female)
             {
+                this.SpeechInputBox.Text = "Switched to my male voice.";
                 this.SpeechInputBox.VoiceGender = VoiceGender.Male;
             }
             else
             {
+                this.SpeechInputBox.Text = "Switched to my female voice.";
                 this.SpeechInputBox.VoiceGender = VoiceGender.Female;
             }
+
+            await this.SpeechInputBox.Speak();
+            this.SpeechInputBox.Text = currentText;
         }
 
         private void ConstraintsButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private async void SpeakButton_Click(object sender, RoutedEventArgs e)
+        {
+            await this.SpeechInputBox.Speak();
+        }
+
+        private void ListenButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.SpeechInputBox.StartListening();
         }
     }
 }

@@ -101,12 +101,12 @@
         #region Properties
 
         /// <summary>
-        /// Gets the text.
+        /// Gets or sets the text.
         /// </summary>
         public string Text
         {
             get { return (string)GetValue(TextProperty); }
-            private set { SetValue(TextProperty, value); }
+            set { SetValue(TextProperty, value); }
         }
 
         public List<ISpeechRecognitionConstraint> Constraints
@@ -296,7 +296,25 @@
         }
 
         /// <summary>
-        /// Starts ... listening.
+        /// Speaks the current text in the current voice.
+        /// </summary>
+        public async Task Speak()
+        {
+            string currentText = string.Empty;
+            var synthesizer = new SpeechSynthesizer();
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
+              () =>
+              {
+                  synthesizer.Voice = this.FindVoice();
+                  currentText = this.Text;
+              }));
+
+            var stream = synthesizer.SynthesizeTextToStreamAsync(currentText);
+            stream.Completed += SpeechSynthesis_Completed;
+        }
+
+        /// <summary>
+        /// Enters listening mode.
         /// </summary>
         public void StartListening()
         {
@@ -443,16 +461,10 @@
 
                 if (results.Confidence != SpeechRecognitionConfidence.Rejected)
                 {
-                    var synthesizer = new SpeechSynthesizer();
                     await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
-                      () => { synthesizer.Voice = this.FindVoice(); }));
+                        () => { this.Text = results.Text; }));
 
-                    var stream = synthesizer.SynthesizeTextToStreamAsync(results.Text);
-
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
-                      () => { this.Text = results.Text; }));
-
-                    stream.Completed += SpeechSynthesis_Completed;
+                    await this.Speak();
 
                     return;
                 }
@@ -504,7 +516,7 @@
                 }
             }
 
-            // Nothing appropriate found.
+            // No appropriate voice found.
             return voices.First();
         }
 

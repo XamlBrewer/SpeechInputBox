@@ -56,8 +56,10 @@
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="Stretch"
                                      BorderBrush="{TemplateBinding Highlight}"
-                                     Padding="12"
-                                     FontSize="18" />
+                                     Padding="8"
+                                     Margin="0"
+                                     FontSize="24"
+                                     Height="64" />
                         </Grid>
                         <Grid Name="PART_ListeningState">
                             <Grid.ColumnDefinitions>
@@ -72,7 +74,7 @@
                                        FontStyle="Italic"
                                        VerticalAlignment="Center"
                                        Margin="12"
-                                       FontSize="18" />
+                                       FontSize="24" />
                             <Border Grid.Column="1"
                                     Background="{TemplateBinding Foreground}"
                                     Width="64"
@@ -107,7 +109,7 @@
                                        Foreground="{TemplateBinding Highlight}"
                                        VerticalAlignment="Center"
                                        Margin="12"
-                                       FontSize="18" />
+                                       FontSize="24" />
                             <Border Grid.Column="1"
                                     Background="{TemplateBinding Foreground}"
                                     Width="64"

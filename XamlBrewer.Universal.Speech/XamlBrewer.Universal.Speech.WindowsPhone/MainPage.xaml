@@ -22,10 +22,36 @@
                    FontSize="32"
                    Foreground="OrangeRed" />
 
-        <!-- Image -->
-        <Image Grid.Row="1"
-               Stretch="UniformToFill"
-               Source="Assets/blahblahblahblah.jpg" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Buttons-->
+            <StackPanel Grid.Column="0">
+                <AppBarButton Icon="Contact"
+                              Label="Voice"
+                              Click="VoiceButton_Click" />
+                <AppBarButton Icon="Setting"
+                              Label="Constraints"
+                              Click="ConstraintsButton_Click" />
+                <AppBarButton Label="Listen"
+                              Click="ListenButton_Click">
+                    <AppBarButton.Icon>
+                        <PathIcon HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Data="M6.54776,7.21708 L7.17389,7.283 L8.40586,8.0367 L8.80385,9.35307 L8.36834,10.8652 L7.09983,12.2062 L6.69071,12.8821 L6.36494,13.9209 L5.91305,14.8898 L5.12558,15.3557 L4.14456,14.9246 L3.55905,13.91 L3.47879,12.5915 L4.04123,11.4999 L4.52154,11.7579 L4.55649,12.5782 L4.54469,13.5523 L4.88471,14.2713 L5.31705,13.9839 L5.56823,13.3331 L6.20994,11.7411 L7.19997,10.7568 L7.83632,9.87864 L7.64399,8.67429 L6.57128,8.24697 L5.95923,8.41003 L5.43493,8.75577 L5.02703,8.99766 L4.76425,8.84917 L4.86391,8.02876 L5.28496,7.5282 L6.54776,7.21708 z M6.81846,2.9049 L8.51023,3.25385 L9.98022,4.19319 L10.9822,5.61307 L11.2701,7.40365 L11.0058,8.95421 L10.6946,9.5013 L10.2093,9.5801 L9.9325,9.15984 L9.93215,8.70122 L10.1857,7.76499 L9.91402,5.90817 L8.75352,4.56603 L7.10427,3.97996 L5.36637,4.39136 L4.63778,5.18217 L4.2299,6.10485 L4.00173,7.02838 L3.57397,7.53749 L2.96126,7.32841 L2.86628,6.74435 L3.303,5.39886 L3.92204,4.27286 L4.64331,3.54787 L5.68899,3.0545 L6.81846,2.9049 z M7.11183,0.000395 L8.01681,0.053844 L10.8233,1.04719 L13.0318,3.1692 L13.7575,4.5482 L14.1486,6.08308 L14.1433,7.73172 L13.68,9.45202 L13.0382,10.676 L12.2129,11.9822 L11.3983,13.3788 L10.7882,14.8739 L10.2521,16.9093 L9.46293,18.6089 L7.84916,19.7133 L5.91496,19.9934 L4.12817,19.5511 L2.95661,18.4884 L2.74122,17.895 L2.54879,16.9421 L2.62049,16.0394 L3.19748,15.5966 L3.73901,15.931 L4.01988,16.7804 L4.22087,17.7308 L4.52276,18.368 L5.48823,18.7455 L6.73163,18.7177 L7.89477,18.3043 L8.61944,17.5245 L9.48821,14.9789 L10.3817,12.5225 L11.7688,10.2473 L12.3732,9.17676 L12.7161,8.00587 L12.5856,5.47569 L11.6121,3.46158 L9.98567,2.06293 L7.89638,1.37911 L5.42418,1.50692 L3.33248,2.50562 L1.89613,4.29654 L1.39004,6.80103 L1.57284,8.40771 L1.55186,9.01629 L1.25454,9.37471 L0.666897,9.28735 L0.32259,8.82822 L0.064771,7.64456 L0.303642,4.58968 L1.71102,2.15826 L4.05704,0.558949 L7.11183,0.000395 z" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton Icon="Volume"
+                              Label="Speak"
+                              Click="SpeakButton_Click" />
+            </StackPanel>
+            <!-- Image -->
+            <Image Grid.Column="1"
+                   Stretch="UniformToFill"
+                   Source="Assets/blahblahblahblah.jpg" />
+        </Grid>
 
         <!-- Logo -->
         <Viewbox x:Name="Logo"
@@ -79,14 +105,4 @@
                                  ButtonBackground="DimGray"
                                  Highlight="DarkOrange" />
     </Grid>
-    <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton Icon="Contact"
-                          Label="Voice"
-                          Click="VoiceButton_Click" />
-            <AppBarButton Icon="Setting"
-                          Label="Constraints"
-                          Click="ConstraintsButton_Click" />
-        </CommandBar>
-    </Page.BottomAppBar>
 </Page>
