@@ -30,6 +30,8 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\Listening.wav" />
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en-US\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\fr\Resources.resw" />
+    <PRIResource Include="$(MSBuildThisFileDirectory)Strings\nl\Resources.resw" />
   </ItemGroup>
 </Project>
