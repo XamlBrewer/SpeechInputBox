@@ -300,6 +300,8 @@
         /// </summary>
         public async Task Speak()
         {
+            this.state = SpeechInputBoxState.Speaking;
+
             string currentText = string.Empty;
             var synthesizer = new SpeechSynthesizer();
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
@@ -404,6 +406,12 @@
         /// </summary>
         private async Task SetState(SpeechInputBoxState state)
         {
+            // Do not interrupt while speaking.
+            while (this.state == SpeechInputBoxState.Speaking)
+            {
+                await Task.Delay(200);
+            }
+
             this.state = state;
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
                async () =>
@@ -525,13 +533,27 @@
         /// </summary>
         private async void SpeechSynthesis_Completed(IAsyncOperation<SpeechSynthesisStream> asyncInfo, AsyncStatus asyncStatus)
         {
-            await this.SetState(SpeechInputBoxState.Default);
-
             var results = asyncInfo.GetResults();
 
             // Play the result, on the UI thread.
             await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
-                () => { this.MediaElement.SetSource(results, results.ContentType); }));
+                () =>
+                {
+                    this.MediaElement.SetSource(results, results.ContentType);
+                    this.MediaElement.CurrentStateChanged += this.MediaElement_CurrentStateChanged;
+                }));
+        }
+
+        private async void MediaElement_CurrentStateChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.MediaElement.CurrentState == MediaElementState.Paused ||
+                this.MediaElement.CurrentState == MediaElementState.Stopped ||
+                this.MediaElement.CurrentState == MediaElementState.Closed)
+            {
+                this.state = SpeechInputBoxState.Default;
+                await this.SetState(SpeechInputBoxState.Default);
+                this.MediaElement.CurrentStateChanged -= this.MediaElement_CurrentStateChanged;
+            }
         }
     }
 }

@@ -8,6 +8,7 @@
         Default,
         Text,
         Listening,
-        Thinking
+        Thinking,
+        Speaking
     }
 }

@@ -49,9 +49,13 @@ namespace XamlBrewer.Universal.Speech
             this.SpeechInputBox.Text = currentText;
         }
 
-        private void ConstraintsButton_Click(object sender, RoutedEventArgs e)
+        private async void ConstraintsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.SpeechInputBox.Question = "What's your favorite color?";
+            this.SpeechInputBox.Text = "What is your favorite color?";
+            await this.SpeechInputBox.Speak();
+            
+            this.SpeechInputBox.StartListening();
         }
 
         private async void SpeakButton_Click(object sender, RoutedEventArgs e)
