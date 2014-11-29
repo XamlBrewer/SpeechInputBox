@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.SpeechSynthesis;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -54,7 +55,11 @@ namespace XamlBrewer.Universal.Speech
             this.SpeechInputBox.Question = "What's your favorite color?";
             this.SpeechInputBox.Text = "What is your favorite color?";
             await this.SpeechInputBox.Speak();
-            
+
+            var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets//ColorRecognizer.xml"));
+            var grammarFileConstraint = new Windows.Media.SpeechRecognition.SpeechRecognitionGrammarFileConstraint(storageFile, "colors");
+            this.SpeechInputBox.Constraints.Clear();
+            this.SpeechInputBox.Constraints.Add(grammarFileConstraint);          
             this.SpeechInputBox.StartListening();
         }
 

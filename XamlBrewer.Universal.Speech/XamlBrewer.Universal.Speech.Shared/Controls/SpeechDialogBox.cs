@@ -30,7 +30,7 @@
     [TemplatePart(Name = ListeningButtonPartName, Type = typeof(Button))]
     [TemplatePart(Name = ThinkingStatePartName, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = ThinkingButtonPartName, Type = typeof(Button))]
-    public sealed class SpeechInputBox : Control
+    public sealed class SpeechDialogBox : Control
     {
         #region Constants
 
@@ -60,15 +60,15 @@
         private FrameworkElement thinkingState;
         private Button thinkingButton;
 
-        private SpeechInputBoxState state = SpeechInputBoxState.Default;
+        private SpeechDialogBoxState state = SpeechDialogBoxState.Default;
         private List<ISpeechRecognitionConstraint> constraints = new List<ISpeechRecognitionConstraint>() { new SpeechRecognitionTopicConstraint(SpeechRecognitionScenario.Dictation, "Development") };
 
         #endregion
 
         #region Constructors
-        public SpeechInputBox()
+        public SpeechDialogBox()
         {
-            this.DefaultStyleKey = typeof(SpeechInputBox);
+            this.DefaultStyleKey = typeof(SpeechDialogBox);
         }
 
         #endregion
@@ -76,19 +76,19 @@
         #region Dependency Property Registrations
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("TextProperty", typeof(string), typeof(SpeechInputBox), new PropertyMetadata(string.Empty, OnTextChanged));
+            DependencyProperty.Register("TextProperty", typeof(string), typeof(SpeechDialogBox), new PropertyMetadata(string.Empty, OnTextChanged));
 
         public static readonly DependencyProperty QuestionProperty =
-            DependencyProperty.Register("Question", typeof(string), typeof(SpeechInputBox), new PropertyMetadata("Ask me anything...", OnQuestionChanged));
+            DependencyProperty.Register("Question", typeof(string), typeof(SpeechDialogBox), new PropertyMetadata("Ask me anything...", OnQuestionChanged));
 
         public static readonly DependencyProperty ButtonBackgroundProperty =
-            DependencyProperty.Register("ButtonBackground", typeof(Brush), typeof(SpeechInputBox), new PropertyMetadata(new SolidColorBrush(Colors.DimGray)));
+            DependencyProperty.Register("ButtonBackground", typeof(Brush), typeof(SpeechDialogBox), new PropertyMetadata(new SolidColorBrush(Colors.DimGray)));
 
         public static readonly DependencyProperty HighlightProperty =
-            DependencyProperty.Register("Highlight", typeof(Brush), typeof(SpeechInputBox), new PropertyMetadata(new SolidColorBrush(Colors.OrangeRed)));
+            DependencyProperty.Register("Highlight", typeof(Brush), typeof(SpeechDialogBox), new PropertyMetadata(new SolidColorBrush(Colors.OrangeRed)));
 
         public static readonly DependencyProperty VoiceGenderProperty =
-            DependencyProperty.Register("VoiceGender", typeof(VoiceGender), typeof(SpeechInputBox), new PropertyMetadata(VoiceGender.Female));
+            DependencyProperty.Register("VoiceGender", typeof(VoiceGender), typeof(SpeechDialogBox), new PropertyMetadata(VoiceGender.Female));
 
         #endregion
 
@@ -290,7 +290,7 @@
             this.ListeningButton.Click += this.Listening_Tapped;
             this.ThinkingButton.Click += this.Thinking_Tapped;
 
-            await this.SetState(SpeechInputBoxState.Default);
+            await this.SetState(SpeechDialogBoxState.Default);
 
             base.OnApplyTemplate();
         }
@@ -300,7 +300,7 @@
         /// </summary>
         public async Task Speak()
         {
-            this.state = SpeechInputBoxState.Speaking;
+            this.state = SpeechDialogBoxState.Speaking;
 
             string currentText = string.Empty;
             var synthesizer = new SpeechSynthesizer();
@@ -322,14 +322,14 @@
         {
             Dispatcher.RunAsync(
                 Windows.UI.Core.CoreDispatcherPriority.Normal,
-                new DispatchedHandler(async () => await this.SetState(SpeechInputBoxState.Listening)));
+                new DispatchedHandler(async () => await this.SetState(SpeechDialogBoxState.Listening)));
         }
 
         private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.Property == TextProperty)
             {
-                var that = d as SpeechInputBox;
+                var that = d as SpeechDialogBox;
                 that.TextBlock.Text = e.NewValue.ToString();
                 that.TextBox.Text = e.NewValue.ToString();
                 if (that.TextChanged != null)
@@ -343,7 +343,7 @@
         {
             if (e.Property == QuestionProperty)
             {
-                var that = d as SpeechInputBox;
+                var that = d as SpeechDialogBox;
                 that.TextBlock.Text = e.NewValue.ToString();
             }
         }
@@ -353,7 +353,7 @@
         /// </summary>
         private async void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            await this.SetState(SpeechInputBoxState.Text);
+            await this.SetState(SpeechDialogBoxState.Text);
         }
 
         /// <summary>
@@ -364,14 +364,14 @@
             if (e.Key == VirtualKey.Accept || e.Key == VirtualKey.Enter)
             {
                 this.Text = this.TextBox.Text;
-                await this.SetState(SpeechInputBoxState.Default);
+                await this.SetState(SpeechDialogBoxState.Default);
             }
         }
 
         private async void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.Text = this.TextBox.Text;
-            await this.SetState(SpeechInputBoxState.Default);
+            await this.SetState(SpeechDialogBoxState.Default);
         }
 
         /// <summary>
@@ -379,7 +379,7 @@
         /// </summary>
         private async void Microphone_Tapped(object sender, RoutedEventArgs e)
         {
-            await this.SetState(SpeechInputBoxState.Listening);
+            await this.SetState(SpeechDialogBoxState.Listening);
         }
 
         /// <summary>
@@ -387,7 +387,7 @@
         /// </summary>
         private async void Listening_Tapped(object sender, RoutedEventArgs e)
         {
-            await this.SetState(SpeechInputBoxState.Thinking);
+            await this.SetState(SpeechDialogBoxState.Thinking);
         }
 
         /// <summary>
@@ -398,16 +398,16 @@
             this.MediaElement.Source = new Uri("ms-appx:///Assets//Cancelled.wav");
             var loader = new ResourceLoader();
             this.Text = loader.GetString("Cancelled");
-            await this.SetState(SpeechInputBoxState.Default);
+            await this.SetState(SpeechDialogBoxState.Default);
         }
 
         /// <summary>
         /// Move to a new state.
         /// </summary>
-        private async Task SetState(SpeechInputBoxState state)
+        private async Task SetState(SpeechDialogBoxState state)
         {
             // Do not interrupt while speaking.
-            while (this.state == SpeechInputBoxState.Speaking)
+            while (this.state == SpeechDialogBoxState.Speaking)
             {
                 await Task.Delay(200);
             }
@@ -424,13 +424,13 @@
 
                    switch (this.state)
                    {
-                       case SpeechInputBoxState.Default:
+                       case SpeechDialogBoxState.Default:
                            this.DefaultState.Visibility = Visibility.Visible;
                            break;
-                       case SpeechInputBoxState.Text:
+                       case SpeechDialogBoxState.Text:
                            this.TextState.Visibility = Visibility.Visible;
                            break;
-                       case SpeechInputBoxState.Listening:
+                       case SpeechDialogBoxState.Listening:
                            this.ListeningState.Visibility = Visibility.Visible;
                            this.MediaElement.Source = new Uri("ms-appx:///Assets//Listening.wav");
                            SpeechRecognizer recognizer = new SpeechRecognizer();
@@ -445,7 +445,7 @@
                            var reco = recognizer.RecognizeAsync();
                            reco.Completed += this.SpeechRecognition_Completed;
                            break;
-                       case SpeechInputBoxState.Thinking:
+                       case SpeechDialogBoxState.Thinking:
                            this.ThinkingState.Visibility = Visibility.Visible;
                            break;
                        default:
@@ -459,7 +459,7 @@
         /// </summary>
         private async void SpeechRecognition_Completed(IAsyncOperation<SpeechRecognitionResult> asyncInfo, AsyncStatus asyncStatus)
         {
-            await this.SetState(SpeechInputBoxState.Thinking);
+            await this.SetState(SpeechDialogBoxState.Thinking);
 
             var hadException = false;
 
@@ -485,7 +485,7 @@
                           var loader = new ResourceLoader();
                           this.Text = loader.GetString("NotUnderstood");
                       }));
-                    await this.SetState(SpeechInputBoxState.Default);
+                    await this.SetState(SpeechDialogBoxState.Default);
                 }
             }
             catch (Exception ex)
@@ -503,7 +503,7 @@
                        var loader = new ResourceLoader();
                        this.Text = loader.GetString("NotUnderstood");
                    }));
-                await this.SetState(SpeechInputBoxState.Default);
+                await this.SetState(SpeechDialogBoxState.Default);
             }
         }
 
@@ -550,8 +550,8 @@
                 this.MediaElement.CurrentState == MediaElementState.Stopped ||
                 this.MediaElement.CurrentState == MediaElementState.Closed)
             {
-                this.state = SpeechInputBoxState.Default;
-                await this.SetState(SpeechInputBoxState.Default);
+                this.state = SpeechDialogBoxState.Default;
+                await this.SetState(SpeechDialogBoxState.Default);
                 this.MediaElement.CurrentStateChanged -= this.MediaElement_CurrentStateChanged;
             }
         }

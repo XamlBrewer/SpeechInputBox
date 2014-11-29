@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<grammar xml:lang="en-US"
+         root="colorChooser"
+         tag-format="semantics/1.0"
+         version="1.0"
+         xmlns="http://www.w3.org/2001/06/grammar">
+
+  <!-- The following rule recognizes any phrase with a color. -->
+  <!-- It's defined as the root rule of the grammar. -->
+  <rule id="colorChooser">
+    <ruleref special="GARBAGE"/>
+    <ruleref uri="#color"/>
+    <ruleref special="GARBAGE"/>
+  </rule>
+
+  <!-- The list of colors that are recognized. -->
+  <!-- Hint: rainbow -->
+  <rule id="color">
+    <one-of>
+      <item>
+        red <tag> out="red"; </tag>
+      </item>
+      <item>
+        orange <tag> out="orange"; </tag>
+      </item>
+      <item>
+        yellow <tag> out="yellow"; </tag>
+      </item>
+      <item>
+        green <tag> out="green"; </tag>
+      </item>
+      <item>
+        blue <tag> out="blue"; </tag>
+      </item>
+      <item>
+        indigo <tag> out="indigo"; </tag>
+      </item>
+      <item>
+        violet <tag> out="violet"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+</grammar>

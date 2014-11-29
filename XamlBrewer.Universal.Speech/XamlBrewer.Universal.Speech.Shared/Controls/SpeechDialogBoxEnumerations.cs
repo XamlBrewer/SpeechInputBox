@@ -1,9 +1,9 @@
 ﻿namespace XamlBrewer.Universal.Controls
 {
     /// <summary>
-    /// SpeechInputBox control states.
+    /// SpeechDialogBox control states.
     /// </summary>
-    public enum SpeechInputBoxState
+    public enum SpeechDialogBoxState
     {
         Default,
         Text,

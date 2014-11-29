@@ -98,7 +98,7 @@
         </Viewbox>
 
         <!-- Speech Input Box Control -->
-        <controls:SpeechInputBox x:Name="SpeechInputBox"
+        <controls:SpeechDialogBox x:Name="SpeechInputBox"
                                  Grid.Row="3"
                                  Background="White"
                                  Foreground="Black"

@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="using:XamlBrewer.Universal.Controls">
 
-    <Style TargetType="local:SpeechInputBox">
+    <Style TargetType="local:SpeechDialogBox">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:SpeechInputBox">
+                <ControlTemplate TargetType="local:SpeechDialogBox">
                     <Grid Height="64">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />

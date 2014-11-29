@@ -22,8 +22,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechInputBox.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechInputBoxEnumerations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechDialogBox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SpeechDialogBoxEnumerations.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\Cancelled.wav" />
