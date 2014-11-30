@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <!-- Title -->
-        <TextBlock Text="Speech Input Box"
+        <TextBlock Text="Speech Dialog Box"
                    Margin="10"
                    FontSize="32"
                    Foreground="OrangeRed" />
