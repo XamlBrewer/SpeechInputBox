@@ -32,9 +32,6 @@
                 <AppBarButton Icon="Contact"
                               Label="Voice"
                               Click="VoiceButton_Click" />
-                <AppBarButton Icon="Setting"
-                              Label="Constraints"
-                              Click="ConstraintsButton_Click" />
                 <AppBarButton Label="Listen"
                               Click="ListenButton_Click">
                     <AppBarButton.Icon>
@@ -46,6 +43,9 @@
                 <AppBarButton Icon="Volume"
                               Label="Speak"
                               Click="SpeakButton_Click" />
+                <AppBarButton Icon="Switch"
+                              Label="Conversation"
+                              Click="ConversationButton_Click" />
             </StackPanel>
             <!-- Image -->
             <Image Grid.Column="1"

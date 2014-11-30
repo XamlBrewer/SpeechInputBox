@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.SpeechSynthesis;
@@ -50,10 +51,11 @@ namespace XamlBrewer.Universal.Speech
             this.SpeechInputBox.Text = currentText;
         }
 
-        private async void ConstraintsButton_Click(object sender, RoutedEventArgs e)
+        private async void ConversationButton_Click(object sender, RoutedEventArgs e)
         {
             this.SpeechInputBox.Question = "What's your favorite color?";
             this.SpeechInputBox.Text = "What is your favorite color?";
+            this.SpeechInputBox.TextChanged += this.SpeechInputBox_TextChanged;
             await this.SpeechInputBox.Speak();
 
             var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets//ColorRecognizer.xml"));
@@ -62,6 +64,12 @@ namespace XamlBrewer.Universal.Speech
             this.SpeechInputBox.Constraints.Add(grammarFileConstraint);
             this.SpeechInputBox.ResponsePattern = "What a coincidence. {0} is my favorite color too.";
             this.SpeechInputBox.StartListening();
+        }
+
+        private async void SpeechInputBox_TextChanged(object sender, EventArgs e)
+        {
+            this.SpeechInputBox.TextChanged -= this.SpeechInputBox_TextChanged;
+            await this.SpeechInputBox.Reset();
         }
 
         private async void SpeakButton_Click(object sender, RoutedEventArgs e)

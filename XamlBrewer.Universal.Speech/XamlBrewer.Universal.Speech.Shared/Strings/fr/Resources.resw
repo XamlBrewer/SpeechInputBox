@@ -129,6 +129,9 @@
   <data name="PART_TextBlock.Text" xml:space="preserve">
     <value>Demande quelque chose</value>
   </data>
+  <data name="Question" xml:space="preserve">
+    <value>Demande quelque chose</value>
+  </data>
   <data name="Thinking.Text" xml:space="preserve">
     <value>Je réfléchi ...</value>
   </data>

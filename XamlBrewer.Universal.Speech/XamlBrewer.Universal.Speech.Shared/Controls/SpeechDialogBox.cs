@@ -34,6 +34,7 @@
     {
         #region Constants
 
+        // Style Template Parts
         private const string MediaElementPartName = "PART_MediaElement";
         private const string DefaultStatePartName = "PART_DefaultState";
         private const string TextBlockPartName = "PART_TextBlock";
@@ -44,6 +45,11 @@
         private const string ListeningButtonPartName = "PART_ListeningButton";
         private const string ThinkingStatePartName = "PART_ThinkingState";
         private const string ThinkingButtonPartName = "PART_ThinkingButton";
+
+        // Text related default values.
+        private const string DefaultText = "";
+        private const string DefaultQuestion = "Ask me anything ...";
+        private const string DefaultResponsePattern = "{0}";
 
         #endregion
 
@@ -76,10 +82,10 @@
         #region Dependency Property Registrations
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("TextProperty", typeof(string), typeof(SpeechDialogBox), new PropertyMetadata(string.Empty, OnTextChanged));
+            DependencyProperty.Register("TextProperty", typeof(string), typeof(SpeechDialogBox), new PropertyMetadata(DefaultText, OnTextChanged));
 
         public static readonly DependencyProperty QuestionProperty =
-            DependencyProperty.Register("Question", typeof(string), typeof(SpeechDialogBox), new PropertyMetadata("Ask me anything...", OnQuestionChanged));
+            DependencyProperty.Register("Question", typeof(string), typeof(SpeechDialogBox), new PropertyMetadata(DefaultQuestion, OnQuestionChanged));
 
         public static readonly DependencyProperty ResponsePatternProperty =
             DependencyProperty.Register("ResponsePattern", typeof(string), typeof(SpeechDialogBox), new PropertyMetadata("{0}"));
@@ -288,24 +294,24 @@
 
         #endregion
 
-        protected override async void OnApplyTemplate()
+        /// <summary>
+        /// Resets this instance to the default text settings.
+        /// </summary>
+        public async Task Reset()
         {
-            this.Highlight = new SolidColorBrush(Colors.Red);
-
-            this.TextBlock.Tapped += this.TextBlock_Tapped;
-            this.TextBox.KeyUp += this.TextBox_KeyUp;
-            this.TextBox.LostFocus += this.TextBox_LostFocus;
-            this.MicrophoneButton.Click += this.Microphone_Tapped;
-            this.ListeningButton.Click += this.Listening_Tapped;
-            this.ThinkingButton.Click += this.Thinking_Tapped;
+            // Allow me to start speaking.
+            await Task.Delay(200); 
 
             await this.SetState(SpeechDialogBoxState.Default);
-
-            base.OnApplyTemplate();
+            this.Text = DefaultText;
+            var loader = new ResourceLoader();
+            this.Question = loader.GetString("Question");
+            this.ResponsePattern = DefaultResponsePattern;
+            this.Constraints.Clear();
         }
 
         /// <summary>
-        /// Speaks the current text in the current voice.
+        /// Speaks the current text in the current voice and with the current ResponseTemplate.
         /// </summary>
         public async Task Speak()
         {
@@ -334,6 +340,28 @@
                 new DispatchedHandler(async () => await this.SetState(SpeechDialogBoxState.Listening)));
         }
 
+        /// <summary>
+        /// Called when the style template is applied.
+        /// </summary>
+        protected override async void OnApplyTemplate()
+        {
+            this.Highlight = new SolidColorBrush(Colors.Red);
+
+            this.TextBlock.Tapped += this.TextBlock_Tapped;
+            this.TextBox.KeyUp += this.TextBox_KeyUp;
+            this.TextBox.LostFocus += this.TextBox_LostFocus;
+            this.MicrophoneButton.Click += this.Microphone_Tapped;
+            this.ListeningButton.Click += this.Listening_Tapped;
+            this.ThinkingButton.Click += this.Thinking_Tapped;
+
+            await this.SetState(SpeechDialogBoxState.Default);
+
+            base.OnApplyTemplate();
+        }
+
+        /// <summary>
+        /// Updates the Text property.
+        /// </summary>
         private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.Property == TextProperty)
@@ -348,6 +376,9 @@
             }
         }
 
+        /// <summary>
+        /// Updates the visible text, without modifying the Text property.
+        /// </summary>
         private static void OnQuestionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.Property == QuestionProperty)
@@ -377,6 +408,9 @@
             }
         }
 
+        /// <summary>
+        /// Handles the LostFocus event of the TextBox control.
+        /// </summary>
         private async void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             this.Text = this.TextBox.Text;
@@ -521,9 +555,6 @@
             var voices = SpeechSynthesizer.AllVoices;
             foreach (var voice in voices)
             {
-                // Temp
-                Debug.WriteLine("{0}/{1}", voice.Language, CultureInfo.CurrentUICulture.Name);
-
                 if (voice.Gender == this.VoiceGender)
                 {
                     if (voice.Language == CultureInfo.CurrentUICulture.Name)
