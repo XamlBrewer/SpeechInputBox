@@ -81,6 +81,9 @@
         public static readonly DependencyProperty QuestionProperty =
             DependencyProperty.Register("Question", typeof(string), typeof(SpeechDialogBox), new PropertyMetadata("Ask me anything...", OnQuestionChanged));
 
+        public static readonly DependencyProperty ResponsePatternProperty =
+            DependencyProperty.Register("ResponsePattern", typeof(string), typeof(SpeechDialogBox), new PropertyMetadata("{0}"));
+
         public static readonly DependencyProperty ButtonBackgroundProperty =
             DependencyProperty.Register("ButtonBackground", typeof(Brush), typeof(SpeechDialogBox), new PropertyMetadata(new SolidColorBrush(Colors.DimGray)));
 
@@ -119,6 +122,12 @@
         {
             get { return (string)GetValue(QuestionProperty); }
             set { SetValue(QuestionProperty, value); }
+        }
+
+        public string ResponsePattern
+        {
+            get { return (string)GetValue(ResponsePatternProperty); }
+            set { SetValue(ResponsePatternProperty, value); }
         }
 
         /// <summary>
@@ -308,7 +317,7 @@
               () =>
               {
                   synthesizer.Voice = this.FindVoice();
-                  currentText = this.Text;
+                  currentText = string.Format(this.ResponsePattern, this.Text);
               }));
 
             var stream = synthesizer.SynthesizeTextToStreamAsync(currentText);

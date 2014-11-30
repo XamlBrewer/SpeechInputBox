@@ -59,7 +59,8 @@ namespace XamlBrewer.Universal.Speech
             var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets//ColorRecognizer.xml"));
             var grammarFileConstraint = new Windows.Media.SpeechRecognition.SpeechRecognitionGrammarFileConstraint(storageFile, "colors");
             this.SpeechInputBox.Constraints.Clear();
-            this.SpeechInputBox.Constraints.Add(grammarFileConstraint);          
+            this.SpeechInputBox.Constraints.Add(grammarFileConstraint);
+            this.SpeechInputBox.ResponsePattern = "What a coincidence. {0} is my favorite color too.";
             this.SpeechInputBox.StartListening();
         }
 
