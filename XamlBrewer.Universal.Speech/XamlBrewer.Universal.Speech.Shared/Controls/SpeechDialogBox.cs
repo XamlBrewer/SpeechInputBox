@@ -23,7 +23,7 @@
     [TemplatePart(Name = MediaElementPartName, Type = typeof(MediaElement))]
     [TemplatePart(Name = DefaultStatePartName, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = TextBlockPartName, Type = typeof(TextBlock))]
-    [TemplatePart(Name = TextStatePartName, Type = typeof(FrameworkElement))]
+    [TemplatePart(Name = TypingStatePartName, Type = typeof(FrameworkElement))]
     [TemplatePart(Name = TextBoxPartName, Type = typeof(TextBox))]
     [TemplatePart(Name = MicrophoneButtonPartName, Type = typeof(Button))]
     [TemplatePart(Name = ListeningStatePartName, Type = typeof(FrameworkElement))]
@@ -38,7 +38,7 @@
         private const string MediaElementPartName = "PART_MediaElement";
         private const string DefaultStatePartName = "PART_DefaultState";
         private const string TextBlockPartName = "PART_TextBlock";
-        private const string TextStatePartName = "PART_TextState";
+        private const string TypingStatePartName = "PART_TypingState";
         private const string TextBoxPartName = "PART_TextBox";
         private const string MicrophoneButtonPartName = "PART_MicrophoneButton";
         private const string ListeningStatePartName = "PART_ListeningState";
@@ -58,7 +58,7 @@
         private MediaElement mediaElement;
         private FrameworkElement defaultState;
         private TextBlock textBlock;
-        private FrameworkElement textState;
+        private FrameworkElement typingState;
         private TextBox textBox;
         private Button microphoneButton;
         private FrameworkElement listeningState;
@@ -189,16 +189,16 @@
             }
         }
 
-        private FrameworkElement TextState
+        private FrameworkElement TypingState
         {
             get
             {
-                if (this.textState == null)
+                if (this.typingState == null)
                 {
-                    this.textState = this.GetTemplateChild(TextStatePartName) as FrameworkElement;
+                    this.typingState = this.GetTemplateChild(TypingStatePartName) as FrameworkElement;
                 }
 
-                return this.textState;
+                return this.typingState;
             }
         }
 
@@ -331,6 +331,43 @@
         }
 
         /// <summary>
+        /// Speaks the specified text in the current voice.
+        /// </summary>
+        public async Task Speak(string text)
+        {
+            this.state = SpeechDialogBoxState.Speaking;
+
+            var synthesizer = new SpeechSynthesizer();
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
+              () =>
+              {
+                  synthesizer.Voice = this.FindVoice();
+              }));
+
+            var stream = synthesizer.SynthesizeTextToStreamAsync(text);
+            stream.Completed += SpeechSynthesis_Completed;
+        }
+
+        /// <summary>
+        /// Speaks the specified SSML in the current voice.
+        /// </summary>
+        /// <remarks>The SSML may override the current voice.</remarks>
+        public async Task SpeakSsml(string text)
+        {
+            this.state = SpeechDialogBoxState.Speaking;
+
+            var synthesizer = new SpeechSynthesizer();
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new DispatchedHandler(
+              () =>
+              {
+                  synthesizer.Voice = this.FindVoice();
+              }));
+
+            var stream = synthesizer.SynthesizeSsmlToStreamAsync(text);
+            stream.Completed += SpeechSynthesis_Completed;
+        }
+
+        /// <summary>
         /// Enters listening mode.
         /// </summary>
         public void StartListening()
@@ -393,7 +430,7 @@
         /// </summary>
         private async void TextBlock_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            await this.SetState(SpeechDialogBoxState.Text);
+            await this.SetState(SpeechDialogBoxState.Typing);
         }
 
         /// <summary>
@@ -461,7 +498,7 @@
                {
                    // Hide all.
                    this.DefaultState.Visibility = Visibility.Collapsed;
-                   this.TextState.Visibility = Visibility.Collapsed;
+                   this.TypingState.Visibility = Visibility.Collapsed;
                    this.ListeningState.Visibility = Visibility.Collapsed;
                    this.ThinkingState.Visibility = Visibility.Collapsed;
 
@@ -470,8 +507,8 @@
                        case SpeechDialogBoxState.Default:
                            this.DefaultState.Visibility = Visibility.Visible;
                            break;
-                       case SpeechDialogBoxState.Text:
-                           this.TextState.Visibility = Visibility.Visible;
+                       case SpeechDialogBoxState.Typing:
+                           this.TypingState.Visibility = Visibility.Visible;
                            break;
                        case SpeechDialogBoxState.Listening:
                            this.ListeningState.Visibility = Visibility.Visible;

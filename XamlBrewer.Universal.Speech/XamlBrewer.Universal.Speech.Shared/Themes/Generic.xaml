@@ -49,7 +49,7 @@
                                 </Button>
                             </Border>
                         </Grid>
-                        <Grid Name="PART_TextState">
+                        <Grid Name="PART_TypingState">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>

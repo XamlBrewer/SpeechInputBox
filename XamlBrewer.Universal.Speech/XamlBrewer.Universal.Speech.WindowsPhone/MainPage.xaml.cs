@@ -34,52 +34,67 @@ namespace XamlBrewer.Universal.Speech
 
         private async void VoiceButton_Click(object sender, RoutedEventArgs e)
         {
-            var currentText = this.SpeechInputBox.Text;
+            var currentText = this.SpeechDialogBox.Text;
 
-            if (this.SpeechInputBox.VoiceGender == VoiceGender.Female)
+            if (this.SpeechDialogBox.VoiceGender == VoiceGender.Female)
             {
-                this.SpeechInputBox.Text = "Switched to my male voice.";
-                this.SpeechInputBox.VoiceGender = VoiceGender.Male;
+                this.SpeechDialogBox.Text = "Switched to my male voice.";
+                this.SpeechDialogBox.VoiceGender = VoiceGender.Male;
             }
             else
             {
-                this.SpeechInputBox.Text = "Switched to my female voice.";
-                this.SpeechInputBox.VoiceGender = VoiceGender.Female;
+                this.SpeechDialogBox.Text = "Switched to my female voice.";
+                this.SpeechDialogBox.VoiceGender = VoiceGender.Female;
             }
 
-            await this.SpeechInputBox.Speak();
-            this.SpeechInputBox.Text = currentText;
+            await this.SpeechDialogBox.Speak();
+            this.SpeechDialogBox.Text = currentText;
         }
 
         private async void ConversationButton_Click(object sender, RoutedEventArgs e)
         {
-            this.SpeechInputBox.Question = "What's your favorite color?";
-            this.SpeechInputBox.Text = "What is your favorite color?";
-            this.SpeechInputBox.TextChanged += this.SpeechInputBox_TextChanged;
-            await this.SpeechInputBox.Speak();
+            this.SpeechDialogBox.Question = "What's your favorite color?";
+            this.SpeechDialogBox.Text = "What is your favorite color?";
+            this.SpeechDialogBox.TextChanged += this.SpeechInputBox_TextChanged;
+            await this.SpeechDialogBox.Speak();
 
             var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets//ColorRecognizer.xml"));
             var grammarFileConstraint = new Windows.Media.SpeechRecognition.SpeechRecognitionGrammarFileConstraint(storageFile, "colors");
-            this.SpeechInputBox.Constraints.Clear();
-            this.SpeechInputBox.Constraints.Add(grammarFileConstraint);
-            this.SpeechInputBox.ResponsePattern = "What a coincidence. {0} is my favorite color too.";
-            this.SpeechInputBox.StartListening();
+            this.SpeechDialogBox.Constraints.Clear();
+            this.SpeechDialogBox.Constraints.Add(grammarFileConstraint);
+            this.SpeechDialogBox.ResponsePattern = "What a coincidence. {0} is my favorite color too.";
+            this.SpeechDialogBox.StartListening();
         }
 
         private async void SpeechInputBox_TextChanged(object sender, EventArgs e)
         {
-            this.SpeechInputBox.TextChanged -= this.SpeechInputBox_TextChanged;
-            await this.SpeechInputBox.Reset();
+            this.SpeechDialogBox.TextChanged -= this.SpeechInputBox_TextChanged;
+            await this.SpeechDialogBox.Reset();
         }
 
         private async void SpeakButton_Click(object sender, RoutedEventArgs e)
         {
-            await this.SpeechInputBox.Speak();
+            await this.SpeechDialogBox.Speak();
         }
 
         private void ListenButton_Click(object sender, RoutedEventArgs e)
         {
-            this.SpeechInputBox.StartListening();
+            this.SpeechDialogBox.StartListening();
+        }
+
+        private async void SpeakButton2_Click(object sender, RoutedEventArgs e)
+        {
+            await this.SpeechDialogBox.Speak("Hello there.");
+
+            await Task.Delay(1000); // Alternative: queue speaking terms.
+
+            var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            folder = await folder.GetFolderAsync("Assets");
+            var file = await folder.GetFileAsync("SSML_Sample.xml");
+            var ssml = await Windows.Storage.FileIO.ReadTextAsync(file);
+            await this.SpeechDialogBox.SpeakSsml(ssml);
+
+            await Task.Delay(20000); // Alternative: queue speaking terms.
         }
     }
 }

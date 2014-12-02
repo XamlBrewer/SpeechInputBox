@@ -43,6 +43,9 @@
                 <AppBarButton Icon="Volume"
                               Label="Speak"
                               Click="SpeakButton_Click" />
+                <AppBarButton Icon="Comment"
+                              Label="Speak 2"
+                              Click="SpeakButton2_Click" />
                 <AppBarButton Icon="Switch"
                               Label="Conversation"
                               Click="ConversationButton_Click" />
@@ -98,7 +101,7 @@
         </Viewbox>
 
         <!-- Speech Input Box Control -->
-        <controls:SpeechDialogBox x:Name="SpeechInputBox"
+        <controls:SpeechDialogBox x:Name="SpeechDialogBox"
                                  Grid.Row="3"
                                  Background="White"
                                  Foreground="Black"

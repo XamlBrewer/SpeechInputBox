@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<speak version='1.0'
+       xmlns='http://www.w3.org/2001/10/synthesis'
+       xml:lang='en-US'>
+
+  Hello <prosody volume='x-loud'>developer</prosody>.
+  <break time='2s'/>
+  I am the Speech Dialog Box.
+  <break time='1s'/>
+  <voice gender='female'>
+    blaa blaa blaa
+    <break time='1s'/>
+    <prosody rate='1.5' pitch='1000Hz'>blaa  blaa blaa blaa blaa blaa</prosody>
+    <break time='1s'/>
+    <prosody rate='2' pitch='2000Hz'>blaa blaa blaa blaa blaa blaa blaa blaa blaa blaa</prosody>
+  </voice>
+  <break time='2s'/>
+  <voice gender='male'>
+    Shut up, you. Give us a break and let us read deedereeks blog.
+  </voice>
+
+</speak>

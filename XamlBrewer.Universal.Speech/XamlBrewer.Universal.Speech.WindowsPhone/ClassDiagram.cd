@@ -1,37 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="XamlBrewer.Universal.Controls.SpeechInputBox">
-    <Position X="1" Y="0.5" Width="2" />
+  <Class Name="XamlBrewer.Universal.Controls.SpeechDialogBox">
+    <Position X="1.5" Y="0.5" Width="2.25" />
     <Members>
+      <Property Name="DefaultState" Hidden="true" />
       <Method Name="FindVoice" Hidden="true" />
       <Method Name="Listening_Tapped" Hidden="true" />
       <Property Name="ListeningButton" Hidden="true" />
       <Property Name="ListeningState" Hidden="true" />
       <Property Name="MediaElement" Hidden="true" />
+      <Method Name="MediaElement_CurrentStateChanged" Hidden="true" />
       <Method Name="Microphone_Tapped" Hidden="true" />
       <Property Name="MicrophoneButton" Hidden="true" />
       <Method Name="OnApplyTemplate" Hidden="true" />
       <Method Name="OnQuestionChanged" Hidden="true" />
       <Method Name="OnTextChanged" Hidden="true" />
       <Method Name="SetState" Hidden="true" />
-      <Method Name="SpeechInputBox" Hidden="true" />
       <Method Name="SpeechRecognition_Completed" Hidden="true" />
       <Method Name="SpeechSynthesis_Completed" Hidden="true" />
       <Property Name="TextBlock" Hidden="true" />
       <Method Name="TextBlock_Tapped" Hidden="true" />
+      <Property Name="TextBox" Hidden="true" />
       <Method Name="TextBox_KeyUp" Hidden="true" />
       <Method Name="TextBox_LostFocus" Hidden="true" />
       <Property Name="TextState" Hidden="true" />
       <Method Name="Thinking_Tapped" Hidden="true" />
       <Property Name="ThinkingButton" Hidden="true" />
       <Property Name="ThinkingState" Hidden="true" />
+      <Property Name="VoiceGender" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAGhBCCDpbAwB4mAAAAziBQAAABYFAEEQAQCBEshIA=</HashCode>
-      <FileName>C:\DevProjects\HBT\ Main\Blogs\XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech.Shared\Controls\SpeechInputBox.cs</FileName>
+      <HashCode>AAAGhBCCDpbAxB4mCBAgziBQAAABYFAEEQAQCBEshYA=</HashCode>
+      <FileName>C:\DevProjects\HBT\ Main\Blogs\XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech.Shared\Controls\SpeechDialogBox.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

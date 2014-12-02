@@ -6,7 +6,7 @@
     public enum SpeechDialogBoxState
     {
         Default,
-        Text,
+        Typing,
         Listening,
         Thinking,
         Speaking
