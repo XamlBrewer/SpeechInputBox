@@ -27,7 +27,6 @@
       <Property Name="ThinkingButton" Hidden="true" />
       <Property Name="ThinkingState" Hidden="true" />
       <Property Name="TypingState" Hidden="true" />
-      <Property Name="VoiceGender" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />

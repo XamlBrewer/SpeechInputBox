@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.SpeechRecognition;
 using Windows.Media.SpeechSynthesis;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -53,16 +54,25 @@ namespace XamlBrewer.Universal.Speech
 
         private async void ConversationButton_Click(object sender, RoutedEventArgs e)
         {
+            // Set the question.
             this.SpeechDialogBox.Question = "What's your favorite color?";
-            this.SpeechDialogBox.Text = "What is your favorite color?";
-            this.SpeechDialogBox.TextChanged += this.SpeechInputBox_TextChanged;
-            await this.SpeechDialogBox.Speak();
 
+            // Let the control ask the question out loud.
+            await this.SpeechDialogBox.Speak("What is your favorite color?");
+
+            // Reset the control when it answered (optional).
+            this.SpeechDialogBox.TextChanged += this.SpeechInputBox_TextChanged;
+
+            // Teach the control to recognize the colors of the rainbow in a random text.
             var storageFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets//ColorRecognizer.xml"));
-            var grammarFileConstraint = new Windows.Media.SpeechRecognition.SpeechRecognitionGrammarFileConstraint(storageFile, "colors");
+            var grammarFileConstraint = new SpeechRecognitionGrammarFileConstraint(storageFile, "colors");
             this.SpeechDialogBox.Constraints.Clear();
             this.SpeechDialogBox.Constraints.Add(grammarFileConstraint);
+
+            // Format the spoken response.
             this.SpeechDialogBox.ResponsePattern = "What a coincidence. {0} is my favorite color too.";
+
+            // Start listening
             this.SpeechDialogBox.StartListening();
         }
 

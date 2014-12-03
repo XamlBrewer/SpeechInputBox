@@ -102,10 +102,10 @@
 
         <!-- Speech Dialog Box Control -->
         <controls:SpeechDialogBox x:Name="SpeechDialogBox"
-                                 Grid.Row="3"
-                                 Background="White"
-                                 Foreground="Black"
-                                 ButtonBackground="DimGray"
-                                 Highlight="DarkOrange" />
+                                  Grid.Row="3"
+                                  Background="White"
+                                  Foreground="Black"
+                                  ButtonBackground="DimGray"
+                                  Highlight="DarkOrange" />
     </Grid>
 </Page>
