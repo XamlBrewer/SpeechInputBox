@@ -100,7 +100,7 @@
             </Canvas>
         </Viewbox>
 
-        <!-- Speech Input Box Control -->
+        <!-- Speech Dialog Box Control -->
         <controls:SpeechDialogBox x:Name="SpeechDialogBox"
                                  Grid.Row="3"
                                  Background="White"
