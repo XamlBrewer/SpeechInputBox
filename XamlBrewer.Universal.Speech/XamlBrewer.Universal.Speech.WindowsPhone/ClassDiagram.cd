@@ -23,17 +23,17 @@
       <Property Name="TextBox" Hidden="true" />
       <Method Name="TextBox_KeyUp" Hidden="true" />
       <Method Name="TextBox_LostFocus" Hidden="true" />
-      <Property Name="TextState" Hidden="true" />
       <Method Name="Thinking_Tapped" Hidden="true" />
       <Property Name="ThinkingButton" Hidden="true" />
       <Property Name="ThinkingState" Hidden="true" />
+      <Property Name="TypingState" Hidden="true" />
       <Property Name="VoiceGender" Hidden="true" />
     </Members>
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAGhBCCDpbAxB4mCBAgziBQAAABYFAEEQAQCBEshYA=</HashCode>
+      <HashCode>AAAGhBCCDpbAxB4mCBAgzCBQACABYFAEEQAQCBEshYg=</HashCode>
       <FileName>C:\DevProjects\HBT\ Main\Blogs\XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech\XamlBrewer.Universal.Speech.Shared\Controls\SpeechDialogBox.cs</FileName>
     </TypeIdentifier>
   </Class>
